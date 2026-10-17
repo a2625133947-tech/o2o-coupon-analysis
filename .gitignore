@@ -1,0 +1,15 @@
+# Local data and environments
+.DS_Store
+.idea/
+.venv/
+__pycache__/
+*.pyc
+*.duckdb
+*.duckdb.wal
+*.wal
+.env
+.env.*
+o2o/
+o2o_work/data/
+o2o_work/qa/
+.ipynb_checkpoints/

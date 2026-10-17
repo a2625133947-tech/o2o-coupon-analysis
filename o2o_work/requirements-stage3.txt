@@ -1,0 +1,2 @@
+-r requirements-stage2.txt
+numpy==2.4.6

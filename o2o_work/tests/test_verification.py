@@ -53,7 +53,8 @@ class VerificationTests(unittest.TestCase):
   import matplotlib.pyplot as plt
   from matplotlib.ticker import PercentFormatter
   import stage3_notebook
-  w=Path(stage3_notebook.WORK);latest=json.loads((w/'results/stage3/latest.json').read_text());out=Path(latest['results_dir'])
+  # Use the published aggregate fixture, independent of local execution receipts.
+  out=Path(stage3_notebook.WORK)/'results/stage3/runs/20261015T154103504261'
   tree=ast.parse(Path(stage3_notebook.__file__).read_text())
   cells=[n.value for n in ast.walk(tree) if isinstance(n,ast.Constant) and isinstance(n.value,str) and (n.value.startswith('ci={(r') or n.value.startswith("data={r['segment_id']:r for r in load('segment_user_evaluation')}"))]
   self.assertEqual(len(cells),2)

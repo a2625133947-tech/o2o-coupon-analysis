@@ -1,0 +1,30 @@
+{
+  "version": "2026-10-14",
+  "small_sample_receipts": 100,
+  "comparison_min_receipts_each_stratum": 30,
+  "nominal_discount_bands": {
+    "le_5pct": [
+      0,
+      0.05
+    ],
+    "5_to_10pct": [
+      0.05,
+      0.1
+    ],
+    "10_to_20pct": [
+      0.1,
+      0.2
+    ],
+    "20_to_30pct": [
+      0.2,
+      0.3
+    ],
+    "gt_30pct": [
+      0.3,
+      1
+    ]
+  },
+  "same_day_monthly_max_day": 15,
+  "comparison_weight": "pooled receipt counts across both groups on common strata",
+  "interpretation": "descriptive standardized association, no causal identification"
+}

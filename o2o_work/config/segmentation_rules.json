@@ -1,0 +1,88 @@
+{
+  "asof_date": "2016-05-01",
+  "recent_days_max": 35,
+  "high_consumption_min": 3,
+  "high_receipt_min": 4,
+  "historical_redemption_condition": "history_redeemed15_records=0",
+  "priority": [
+    "unknown_history",
+    "high_receipt_zero_redemption",
+    "no_observed_consumption",
+    "recent_high_frequency",
+    "recent_low_frequency",
+    "not_recent_consumption"
+  ],
+  "names": {
+    "unknown_history": "未知历史",
+    "high_receipt_zero_redemption": "历史多领券零核销",
+    "no_observed_consumption": "有历史但无已观察消费",
+    "recent_high_frequency": "近期高频消费",
+    "recent_low_frequency": "近期低频消费",
+    "not_recent_consumption": "非近期消费"
+  },
+  "derivation": {
+    "recent_days_max": "ceil(有历史消费用户recency_days的中位数)",
+    "high_consumption_min": "max(2, ceil(有历史消费用户消费记录频次Q75))",
+    "high_receipt_min": "max(2, ceil(有成熟领券用户成熟历史领券频次Q90))",
+    "zero_redemption": "历史成熟领券群体核销率Q90为0，因此采用零核销的可解释条件，不任意设置低率分数"
+  },
+  "distribution": {
+    "recency_days": {
+      "feature": "recency_days",
+      "population": "history_consumption_records>0",
+      "users": 157049,
+      "minimum": 1.0,
+      "q25": 12.0,
+      "q50": 35.0,
+      "q75": 64.0,
+      "q90": 96.0,
+      "maximum": 121.0
+    },
+    "history_consumption_records": {
+      "feature": "history_consumption_records",
+      "population": "history_consumption_records>0",
+      "users": 157049,
+      "minimum": 1.0,
+      "q25": 1.0,
+      "q50": 1.0,
+      "q75": 3.0,
+      "q90": 6.0,
+      "maximum": 150.0
+    },
+    "history_mature_receipt_records": {
+      "feature": "history_mature_receipt_records",
+      "population": "history_mature_receipt_records>0",
+      "users": 347147,
+      "minimum": 1.0,
+      "q25": 1.0,
+      "q50": 1.0,
+      "q75": 2.0,
+      "q90": 4.0,
+      "maximum": 89.0
+    },
+    "history_redemption_rate15": {
+      "feature": "history_redemption_rate15",
+      "population": "history_mature_receipt_records>0",
+      "users": 347147,
+      "minimum": 0.0,
+      "q25": 0.0,
+      "q50": 0.0,
+      "q75": 0.0,
+      "q90": 0.0,
+      "maximum": 1.0
+    },
+    "history_active_days": {
+      "feature": "history_active_days",
+      "population": "TRUE",
+      "users": 433113,
+      "minimum": 1.0,
+      "q25": 1.0,
+      "q50": 1.0,
+      "q75": 2.0,
+      "q90": 4.0,
+      "maximum": 102.0
+    }
+  },
+  "rule_selection_uses_may_outcomes": false,
+  "unknown_universe": "历史用户与5月评价用户的并集仅用于回溯评价；未知用户并非已知的5月1日平台名单"
+}

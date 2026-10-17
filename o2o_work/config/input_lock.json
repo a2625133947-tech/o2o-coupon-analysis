@@ -1,0 +1,73 @@
+{
+  "profile": "outputs/dataset_review_20261014/profile.json",
+  "files": [
+    {
+      "path": "o2o/ccf_offline_stage1_test_revised.csv",
+      "bytes": 4046198,
+      "sha256": "90bfc9e74bb8b6858b40ed947cb43c2ff7890414c4f8422d50fe96ab2fb464bd",
+      "profile_key": "test",
+      "rows": 113640,
+      "columns": [
+        "User_id",
+        "Merchant_id",
+        "Coupon_id",
+        "Discount_rate",
+        "Distance",
+        "Date_received"
+      ],
+      "role": "可选预测，无核销标签",
+      "has_header": true
+    },
+    {
+      "path": "o2o/ccf_offline_stage1_train.csv",
+      "bytes": 71647992,
+      "sha256": "85ed49fd9873abebaef01a608defed667a3a2325e5c967fa25f4e9dc4b83f986",
+      "profile_key": "offline",
+      "rows": 1754884,
+      "columns": [
+        "User_id",
+        "Merchant_id",
+        "Coupon_id",
+        "Discount_rate",
+        "Distance",
+        "Date_received",
+        "Date"
+      ],
+      "role": "核心分析",
+      "has_header": true
+    },
+    {
+      "path": "o2o/ccf_online_stage1_train.csv",
+      "bytes": 482824573,
+      "sha256": "9f0ac5e978db842a45d1ee1836ff609bf83c9b500429993ee6731b2622c3be0e",
+      "profile_key": "online",
+      "rows": 11429826,
+      "columns": [
+        "User_id",
+        "Merchant_id",
+        "Action",
+        "Coupon_id",
+        "Discount_rate",
+        "Date_received",
+        "Date"
+      ],
+      "role": "增强模块",
+      "has_header": true
+    },
+    {
+      "path": "o2o/sample_submission.csv",
+      "bytes": 364,
+      "sha256": "35ed18999cb6b1af6132ca4acc3de7cd4d45b2a9aa0e69c8aeac716fd38cbf4b",
+      "profile_key": null,
+      "rows": null,
+      "columns": [
+        "User_id",
+        "Coupon_id",
+        "Date_received",
+        "Probability"
+      ],
+      "role": "格式模板，不是结果",
+      "has_header": false
+    }
+  ]
+}

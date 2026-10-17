@@ -1,0 +1,46 @@
+{
+  "version": "2026-10-14",
+  "history_start": "2016-01-01",
+  "segmentation_asof": "2016-05-01",
+  "history_end_exclusive": "2016-05-01",
+  "evaluation_receipt_start": "2016-05-01",
+  "evaluation_receipt_end_inclusive": "2016-05-31",
+  "evaluation_observation_end": "2016-06-15",
+  "training_observation_end": "2016-06-30",
+  "redemption_days_inclusive": [
+    0,
+    15
+  ],
+  "duplicates": "retain_source_records",
+  "ids": "VARCHAR",
+  "distance": "raw_code_with_unknown",
+  "sample_rows": 10000,
+  "offline_baseline": {
+    "rows": 1754884,
+    "states": {
+      "receipt_records": 1053282,
+      "receipt_with_consumption": 75382,
+      "redeemed_within15": 64395,
+      "receipt_without_consumption": 977900,
+      "consumption_without_receipt": 701602,
+      "neither_date": 0,
+      "negative_lag": 0,
+      "coupon_receipt_mismatch": 0,
+      "lag_over15": 10987
+    },
+    "mature15": {
+      "receipts": 1053282,
+      "redeemed15": 64395,
+      "immature_receipts": 0
+    },
+    "all_receipt_redeem15_rate": 0.06113747315533732,
+    "exact_duplicate_excess": 37893,
+    "dedup_sensitivity": {
+      "rows": 1716991,
+      "receipts": 1015389,
+      "redeemed15": 62153,
+      "mature_receipts": 1015389,
+      "mature_redeemed15": 62153
+    }
+  }
+}

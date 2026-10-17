@@ -1,0 +1,2 @@
+merchant_count,min_receipts,q25_receipts,median_receipts,q75_receipts,q90_receipts,max_receipts,small_sample_merchants
+5599,1,5.0,10.0,27.0,81.0,122834,5140

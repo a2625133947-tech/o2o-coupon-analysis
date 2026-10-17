@@ -1,0 +1,3 @@
+coupon_type,receipt_records,receipt_users,redeemed15_records,redeemed15_users,redemption_rate15,redemption_user_share15,small_sample
+direct_discount,33272,27955,3852,3038,0.1157730223611445,0.10867465569665534,False
+threshold_reduction,1020010,495108,60543,37447,0.059355300438231,0.07563400308619533,False

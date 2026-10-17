@@ -1,0 +1,402 @@
+{
+  "input": {
+    "path": "o2o/ccf_offline_stage1_train.csv",
+    "bytes": 71647992,
+    "sha256": "85ed49fd9873abebaef01a608defed667a3a2325e5c967fa25f4e9dc4b83f986",
+    "profile_key": "offline",
+    "rows": 1754884,
+    "columns": [
+      "User_id",
+      "Merchant_id",
+      "Coupon_id",
+      "Discount_rate",
+      "Distance",
+      "Date_received",
+      "Date"
+    ],
+    "role": "核心分析",
+    "has_header": true
+  },
+  "stage1_run_id": "20261015T154031143321",
+  "stage1_database_sha256": "e6f88662cac93da4d67b74b1585d3fc93565e7ac55d9d07570454404e92c7cc1",
+  "config": {
+    "version": "2026-10-14",
+    "history_start": "2016-01-01",
+    "segmentation_asof": "2016-05-01",
+    "history_end_exclusive": "2016-05-01",
+    "evaluation_receipt_start": "2016-05-01",
+    "evaluation_receipt_end_inclusive": "2016-05-31",
+    "evaluation_observation_end": "2016-06-15",
+    "training_observation_end": "2016-06-30",
+    "redemption_days_inclusive": [
+      0,
+      15
+    ],
+    "duplicates": "retain_source_records",
+    "ids": "VARCHAR",
+    "distance": "raw_code_with_unknown",
+    "sample_rows": 10000,
+    "offline_baseline": {
+      "rows": 1754884,
+      "states": {
+        "receipt_records": 1053282,
+        "receipt_with_consumption": 75382,
+        "redeemed_within15": 64395,
+        "receipt_without_consumption": 977900,
+        "consumption_without_receipt": 701602,
+        "neither_date": 0,
+        "negative_lag": 0,
+        "coupon_receipt_mismatch": 0,
+        "lag_over15": 10987
+      },
+      "mature15": {
+        "receipts": 1053282,
+        "redeemed15": 64395,
+        "immature_receipts": 0
+      },
+      "all_receipt_redeem15_rate": 0.06113747315533732,
+      "exact_duplicate_excess": 37893,
+      "dedup_sensitivity": {
+        "rows": 1716991,
+        "receipts": 1015389,
+        "redeemed15": 62153,
+        "mature_receipts": 1015389,
+        "mature_redeemed15": 62153
+      }
+    }
+  },
+  "review_config": {
+    "version": "2026-10-14",
+    "small_sample_receipts": 100,
+    "comparison_min_receipts_each_stratum": 30,
+    "nominal_discount_bands": {
+      "le_5pct": [
+        0,
+        0.05
+      ],
+      "5_to_10pct": [
+        0.05,
+        0.1
+      ],
+      "10_to_20pct": [
+        0.1,
+        0.2
+      ],
+      "20_to_30pct": [
+        0.2,
+        0.3
+      ],
+      "gt_30pct": [
+        0.3,
+        1
+      ]
+    },
+    "same_day_monthly_max_day": 15,
+    "comparison_weight": "pooled receipt counts across both groups on common strata",
+    "interpretation": "descriptive standardized association, no causal identification"
+  },
+  "sql_hashes": {
+    "01_overview.sql": "e7768be7c4bf59fe6e518a6b594a90c0d03e50c8faee86afae0de400a0f4efae",
+    "02_receipt_cohort.sql": "124866dcb3d415b4038ec938af36eaf6d74c7055c3b66571802dc920bf13f7ac",
+    "03_coupon.sql": "ce93c47e99fb2b8d566c991bd1f414de290f65d72cfc0db6e8720dfad4beb5c6",
+    "04_distance.sql": "5d6a2bc899a90ec63722ea8a33c71cd329e3af49361421525ab5a80eec134507",
+    "05_merchant.sql": "0feba69797b207b95c03ec292cb076cb2d448802016b40ccf21f2e524ca62d24",
+    "06_redemption_lag.sql": "b001608e9c7e6313343435a9ed0988526bfc4721a99ac2e844c2f3f758f1fa58",
+    "07_comparable_review.sql": "b472b6c7a5080262e2e83add28eb4a966bc74e27a04dc74c9fac45437406109f"
+  },
+  "stage2_script_sha256": "468c7fe13fdeed30418f05c77fad233512a2b09a3565d07d2751e4fb41a67636",
+  "companion_script_hashes": {
+    "stage2_findings.py": "2fff1c98c2853767bfcd212ee49fbca1cd591471e2481f8be088f3adc88b5080",
+    "stage2_notebook.py": "8320233222223f90c6ba2075ef267b55f745b00f54720743ec405338556f2328",
+    "verification.py": "8755a9cf1854b81a47985c7a8f9f7418bde9e0d7e022543465d400781d66b7a0"
+  },
+  "semantic_test_sha256": "1960be641af304974bf2a4af51fef6b0294f8b62339926b9622208db633fa2e7",
+  "stage2_config_sha256": "89eac5c6c0a9ec0963b2b4b4592288ac26947323be27edac5917661988972ef0",
+  "source": "./o2o_work/data/o2o.duckdb",
+  "receipt_window": [
+    "2016-01-01",
+    "2016-06-15"
+  ],
+  "consumption_observation_end": "2016-06-30",
+  "grain": "source records; duplicates retained",
+  "table_contracts": {
+    "overview": {
+      "sql": "01_overview.sql",
+      "grain": "entire mature receipt population plus whole offline source consumption counts",
+      "rate_contract": "standard record rate=redeemed15_records/receipt_records; user share=redeemed15_users/receipt_users when present; lag rates use explicit mature_receipt_records or total_redeemed15_records; review rate uses its named numerator/denominator",
+      "window": "receipt2016-01-01 through2016-06-15; consume observed through2016-06-30; days0-15 inclusive",
+      "duplicates": "retained",
+      "zero_denominator": "NULL/not computable",
+      "user_counts": "distinct within row only; nonadditive"
+    },
+    "receipt_cohort": {
+      "sql": "02_receipt_cohort.sql",
+      "grain": "receipt month",
+      "rate_contract": "standard record rate=redeemed15_records/receipt_records; user share=redeemed15_users/receipt_users when present; lag rates use explicit mature_receipt_records or total_redeemed15_records; review rate uses its named numerator/denominator",
+      "window": "receipt2016-01-01 through2016-06-15; consume observed through2016-06-30; days0-15 inclusive",
+      "duplicates": "retained",
+      "zero_denominator": "NULL/not computable",
+      "user_counts": "distinct within row only; nonadditive"
+    },
+    "receipt_cohort_days1_15": {
+      "sql": "02_receipt_cohort.sql",
+      "grain": "receipt month, receipt calendar day1 through15 only",
+      "rate_contract": "standard record rate=redeemed15_records/receipt_records; user share=redeemed15_users/receipt_users when present; lag rates use explicit mature_receipt_records or total_redeemed15_records; review rate uses its named numerator/denominator",
+      "window": "receipt2016-01-01 through2016-06-15; consume observed through2016-06-30; days0-15 inclusive",
+      "duplicates": "retained",
+      "zero_denominator": "NULL/not computable",
+      "user_counts": "distinct within row only; nonadditive"
+    },
+    "coupon_type_metrics": {
+      "sql": "03_coupon.sql",
+      "grain": "coupon type",
+      "rate_contract": "standard record rate=redeemed15_records/receipt_records; user share=redeemed15_users/receipt_users when present; lag rates use explicit mature_receipt_records or total_redeemed15_records; review rate uses its named numerator/denominator",
+      "window": "receipt2016-01-01 through2016-06-15; consume observed through2016-06-30; days0-15 inclusive",
+      "duplicates": "retained",
+      "zero_denominator": "NULL/not computable",
+      "user_counts": "distinct within row only; nonadditive"
+    },
+    "coupon_threshold_metrics": {
+      "sql": "03_coupon.sql",
+      "grain": "coupon type + threshold; direct discount threshold null",
+      "rate_contract": "standard record rate=redeemed15_records/receipt_records; user share=redeemed15_users/receipt_users when present; lag rates use explicit mature_receipt_records or total_redeemed15_records; review rate uses its named numerator/denominator",
+      "window": "receipt2016-01-01 through2016-06-15; consume observed through2016-06-30; days0-15 inclusive",
+      "duplicates": "retained",
+      "zero_denominator": "NULL/not computable",
+      "user_counts": "distinct within row only; nonadditive"
+    },
+    "coupon_discount_band_metrics": {
+      "sql": "03_coupon.sql",
+      "grain": "coupon type + nominal discount band",
+      "rate_contract": "standard record rate=redeemed15_records/receipt_records; user share=redeemed15_users/receipt_users when present; lag rates use explicit mature_receipt_records or total_redeemed15_records; review rate uses its named numerator/denominator",
+      "window": "receipt2016-01-01 through2016-06-15; consume observed through2016-06-30; days0-15 inclusive",
+      "duplicates": "retained",
+      "zero_denominator": "NULL/not computable",
+      "user_counts": "distinct within row only; nonadditive"
+    },
+    "coupon_scheme_metrics": {
+      "sql": "03_coupon.sql",
+      "grain": "coupon type + raw discount format + threshold + reduction + nominal fraction",
+      "rate_contract": "standard record rate=redeemed15_records/receipt_records; user share=redeemed15_users/receipt_users when present; lag rates use explicit mature_receipt_records or total_redeemed15_records; review rate uses its named numerator/denominator",
+      "window": "receipt2016-01-01 through2016-06-15; consume observed through2016-06-30; days0-15 inclusive",
+      "duplicates": "retained",
+      "zero_denominator": "NULL/not computable",
+      "user_counts": "distinct within row only; nonadditive"
+    },
+    "coupon_type_month_metrics": {
+      "sql": "03_coupon.sql",
+      "grain": "receipt month + coupon type",
+      "rate_contract": "standard record rate=redeemed15_records/receipt_records; user share=redeemed15_users/receipt_users when present; lag rates use explicit mature_receipt_records or total_redeemed15_records; review rate uses its named numerator/denominator",
+      "window": "receipt2016-01-01 through2016-06-15; consume observed through2016-06-30; days0-15 inclusive",
+      "duplicates": "retained",
+      "zero_denominator": "NULL/not computable",
+      "user_counts": "distinct within row only; nonadditive"
+    },
+    "distance_metrics": {
+      "sql": "04_distance.sql",
+      "grain": "raw distance code or unknown",
+      "rate_contract": "standard record rate=redeemed15_records/receipt_records; user share=redeemed15_users/receipt_users when present; lag rates use explicit mature_receipt_records or total_redeemed15_records; review rate uses its named numerator/denominator",
+      "window": "receipt2016-01-01 through2016-06-15; consume observed through2016-06-30; days0-15 inclusive",
+      "duplicates": "retained",
+      "zero_denominator": "NULL/not computable",
+      "user_counts": "distinct within row only; nonadditive"
+    },
+    "distance_month_metrics": {
+      "sql": "04_distance.sql",
+      "grain": "receipt month + raw distance code or unknown",
+      "rate_contract": "standard record rate=redeemed15_records/receipt_records; user share=redeemed15_users/receipt_users when present; lag rates use explicit mature_receipt_records or total_redeemed15_records; review rate uses its named numerator/denominator",
+      "window": "receipt2016-01-01 through2016-06-15; consume observed through2016-06-30; days0-15 inclusive",
+      "duplicates": "retained",
+      "zero_denominator": "NULL/not computable",
+      "user_counts": "distinct within row only; nonadditive"
+    },
+    "merchant_metrics": {
+      "sql": "05_merchant.sql",
+      "grain": "merchant",
+      "rate_contract": "standard record rate=redeemed15_records/receipt_records; user share=redeemed15_users/receipt_users when present; lag rates use explicit mature_receipt_records or total_redeemed15_records; review rate uses its named numerator/denominator",
+      "window": "receipt2016-01-01 through2016-06-15; consume observed through2016-06-30; days0-15 inclusive",
+      "duplicates": "retained",
+      "zero_denominator": "NULL/not computable",
+      "user_counts": "distinct within row only; nonadditive"
+    },
+    "merchant_structure": {
+      "sql": "05_merchant.sql",
+      "grain": "merchant + receipt month + coupon type + threshold + distance code",
+      "rate_contract": "standard record rate=redeemed15_records/receipt_records; user share=redeemed15_users/receipt_users when present; lag rates use explicit mature_receipt_records or total_redeemed15_records; review rate uses its named numerator/denominator",
+      "window": "receipt2016-01-01 through2016-06-15; consume observed through2016-06-30; days0-15 inclusive",
+      "duplicates": "retained",
+      "zero_denominator": "NULL/not computable",
+      "user_counts": "distinct within row only; nonadditive"
+    },
+    "merchant_distribution": {
+      "sql": "05_merchant.sql",
+      "grain": "distribution across receipt-issuing merchants; not rates",
+      "rate_contract": "standard record rate=redeemed15_records/receipt_records; user share=redeemed15_users/receipt_users when present; lag rates use explicit mature_receipt_records or total_redeemed15_records; review rate uses its named numerator/denominator",
+      "window": "receipt2016-01-01 through2016-06-15; consume observed through2016-06-30; days0-15 inclusive",
+      "duplicates": "retained",
+      "zero_denominator": "NULL/not computable",
+      "user_counts": "distinct within row only; nonadditive"
+    },
+    "redemption_lag": {
+      "sql": "06_redemption_lag.sql",
+      "grain": "day0 through15; receipt denominator repeated, never sum denominator across days",
+      "rate_contract": "standard record rate=redeemed15_records/receipt_records; user share=redeemed15_users/receipt_users when present; lag rates use explicit mature_receipt_records or total_redeemed15_records; review rate uses its named numerator/denominator",
+      "window": "receipt2016-01-01 through2016-06-15; consume observed through2016-06-30; days0-15 inclusive",
+      "duplicates": "retained",
+      "zero_denominator": "NULL/not computable",
+      "user_counts": "distinct within row only; nonadditive"
+    },
+    "redemption_lag_summary": {
+      "sql": "06_redemption_lag.sql",
+      "grain": "successful mature receipts only; wait-day statistics, not rates",
+      "rate_contract": "standard record rate=redeemed15_records/receipt_records; user share=redeemed15_users/receipt_users when present; lag rates use explicit mature_receipt_records or total_redeemed15_records; review rate uses its named numerator/denominator",
+      "window": "receipt2016-01-01 through2016-06-15; consume observed through2016-06-30; days0-15 inclusive",
+      "duplicates": "retained",
+      "zero_denominator": "NULL/not computable",
+      "user_counts": "distinct within row only; nonadditive"
+    },
+    "redemption_lag_by_coupon_type": {
+      "sql": "06_redemption_lag.sql",
+      "grain": "coupon type + day0 through15; per-type denominator repeated",
+      "rate_contract": "standard record rate=redeemed15_records/receipt_records; user share=redeemed15_users/receipt_users when present; lag rates use explicit mature_receipt_records or total_redeemed15_records; review rate uses its named numerator/denominator",
+      "window": "receipt2016-01-01 through2016-06-15; consume observed through2016-06-30; days0-15 inclusive",
+      "duplicates": "retained",
+      "zero_denominator": "NULL/not computable",
+      "user_counts": "distinct within row only; nonadditive"
+    },
+    "comparison_cells": {
+      "sql": "07_comparable_review.sql",
+      "grain": "comparison + side + exact control strata",
+      "rate_contract": "standard record rate=redeemed15_records/receipt_records; user share=redeemed15_users/receipt_users when present; lag rates use explicit mature_receipt_records or total_redeemed15_records; review rate uses its named numerator/denominator",
+      "window": "receipt2016-01-01 through2016-06-15; consume observed through2016-06-30; days0-15 inclusive",
+      "duplicates": "retained",
+      "zero_denominator": "NULL/not computable",
+      "user_counts": "distinct within row only; nonadditive"
+    },
+    "comparison_strata": {
+      "sql": "07_comparable_review.sql",
+      "grain": "comparison + exact strata; both sides retained including unmatched",
+      "rate_contract": "standard record rate=redeemed15_records/receipt_records; user share=redeemed15_users/receipt_users when present; lag rates use explicit mature_receipt_records or total_redeemed15_records; review rate uses its named numerator/denominator",
+      "window": "receipt2016-01-01 through2016-06-15; consume observed through2016-06-30; days0-15 inclusive",
+      "duplicates": "retained",
+      "zero_denominator": "NULL/not computable",
+      "user_counts": "distinct within row only; nonadditive"
+    },
+    "comparison_summary": {
+      "sql": "07_comparable_review.sql",
+      "grain": "comparison + common-support rule; standardized numerator is a weighted equivalent quantity",
+      "rate_contract": "standard record rate=redeemed15_records/receipt_records; user share=redeemed15_users/receipt_users when present; lag rates use explicit mature_receipt_records or total_redeemed15_records; review rate uses its named numerator/denominator",
+      "window": "receipt2016-01-01 through2016-06-15; consume observed through2016-06-30; days0-15 inclusive",
+      "duplicates": "retained",
+      "zero_denominator": "NULL/not computable",
+      "user_counts": "distinct within row only; nonadditive"
+    }
+  },
+  "common_support": "both observed; standardized with pooled receipt weights, descriptive only",
+  "rates": "all ratios retain numerators/denominators; grouped distinct users never additive",
+  "small_sample": "<100 receipts is an operational caution, not statistical assurance at >=100",
+  "sql_execution": "real DuckDB 1.4.3",
+  "files": {
+    "overview": {
+      "csv": "./o2o_work/results/stage2/runs/20261015T154046130013/overview.csv",
+      "rows": 1,
+      "sha256": "757727bfd3262afcdbf9ac7d5b4100333d3980ed560abb420f144ea41613c1f8"
+    },
+    "receipt_cohort": {
+      "csv": "./o2o_work/results/stage2/runs/20261015T154046130013/receipt_cohort.csv",
+      "rows": 6,
+      "sha256": "cb271ebd572483118fddb6fe30e747788fdb58937a266b54bc24d44ea45246ae"
+    },
+    "receipt_cohort_days1_15": {
+      "csv": "./o2o_work/results/stage2/runs/20261015T154046130013/receipt_cohort_days1_15.csv",
+      "rows": 6,
+      "sha256": "b349eff2a858c82085817790102a78f4ebacc5891f524cb538608369365a4d43"
+    },
+    "coupon_type_metrics": {
+      "csv": "./o2o_work/results/stage2/runs/20261015T154046130013/coupon_type_metrics.csv",
+      "rows": 2,
+      "sha256": "654ea5da40b3893f5c5b3587601928ef8e746ab0a42689bf9ee80204027dd506"
+    },
+    "coupon_threshold_metrics": {
+      "csv": "./o2o_work/results/stage2/runs/20261015T154046130013/coupon_threshold_metrics.csv",
+      "rows": 10,
+      "sha256": "368398da092b2489d74ee3f4df8a0b74770a0704d90187d71b45ddbb73039135"
+    },
+    "coupon_discount_band_metrics": {
+      "csv": "./o2o_work/results/stage2/runs/20261015T154046130013/coupon_discount_band_metrics.csv",
+      "rows": 10,
+      "sha256": "3b4708743c05026dac71bd86acf933e0a6adf07f17877c9d9f5d1f0a4bd5d6e5"
+    },
+    "coupon_scheme_metrics": {
+      "csv": "./o2o_work/results/stage2/runs/20261015T154046130013/coupon_scheme_metrics.csv",
+      "rows": 45,
+      "sha256": "c492e91098e601ae6f7e656961fc59f99e21e105c8ca1576cca9dc4c3ea81faf"
+    },
+    "coupon_type_month_metrics": {
+      "csv": "./o2o_work/results/stage2/runs/20261015T154046130013/coupon_type_month_metrics.csv",
+      "rows": 12,
+      "sha256": "19777c51facbd02ffcdaedbe8d91383d8b701345c5872d3e02df6a08225474c1"
+    },
+    "distance_metrics": {
+      "csv": "./o2o_work/results/stage2/runs/20261015T154046130013/distance_metrics.csv",
+      "rows": 12,
+      "sha256": "76a730389374e680ac541b613296536ee74f8f1fbdcf4b187b3343b35304215f"
+    },
+    "distance_month_metrics": {
+      "csv": "./o2o_work/results/stage2/runs/20261015T154046130013/distance_month_metrics.csv",
+      "rows": 72,
+      "sha256": "edab53b5b89605c04315109f257d1dd5839b14baafc55f5516e6959d2aabe387"
+    },
+    "merchant_metrics": {
+      "csv": "./o2o_work/results/stage2/runs/20261015T154046130013/merchant_metrics.csv",
+      "rows": 5599,
+      "sha256": "224b4200a07e605a000cd2722e00e577524685deab3ca7b14c7b8b4a87f7646e"
+    },
+    "merchant_structure": {
+      "csv": "./o2o_work/results/stage2/runs/20261015T154046130013/merchant_structure.csv",
+      "rows": 48392,
+      "sha256": "853e375b379aaa303c1e68a63aade5bc9b4e4058d064835b358dbdb13671c57e"
+    },
+    "merchant_distribution": {
+      "csv": "./o2o_work/results/stage2/runs/20261015T154046130013/merchant_distribution.csv",
+      "rows": 1,
+      "sha256": "0f87f29603337fc00719ac87c3275667c787f9b157d342c8c7bbd149e2cf546f"
+    },
+    "redemption_lag": {
+      "csv": "./o2o_work/results/stage2/runs/20261015T154046130013/redemption_lag.csv",
+      "rows": 16,
+      "sha256": "ef1072cfbce98826c155c7861301f816d1fab6f90bac7f52070e04532718e039"
+    },
+    "redemption_lag_summary": {
+      "csv": "./o2o_work/results/stage2/runs/20261015T154046130013/redemption_lag_summary.csv",
+      "rows": 1,
+      "sha256": "ccabf9471891ffbd63083fe157f346d587c275379f269afe94bdb7e9dc1fff57"
+    },
+    "redemption_lag_by_coupon_type": {
+      "csv": "./o2o_work/results/stage2/runs/20261015T154046130013/redemption_lag_by_coupon_type.csv",
+      "rows": 32,
+      "sha256": "676b67d108a6f5fd2ce740e21ab600aa09bfbc93f1df460d50b973ab81b07bff"
+    },
+    "comparison_cells": {
+      "csv": "./o2o_work/results/stage2/runs/20261015T154046130013/comparison_cells.csv",
+      "rows": 95305,
+      "sha256": "6a60a579257d50a09e330d51b49f4c6dd931c6d8464ac15d7fb5258624953ac5"
+    },
+    "comparison_strata": {
+      "csv": "./o2o_work/results/stage2/runs/20261015T154046130013/comparison_strata.csv",
+      "rows": 88963,
+      "sha256": "056831cdaf945856288ffe492b0139b188a3fb5e8469e4823d3220ae719f54e6"
+    },
+    "comparison_summary": {
+      "csv": "./o2o_work/results/stage2/runs/20261015T154046130013/comparison_summary.csv",
+      "rows": 12,
+      "sha256": "182a3fa7276d4a5b84e955c6a84b6c93f4792216b89593dace8948e90c352c51"
+    }
+  },
+  "publication_export": {
+    "kind": "aggregate portfolio snapshot",
+    "excluded_record_and_user_details": [],
+    "database_included": false,
+    "source": "local verified analysis; this export does not reproduce original acceptance receipts"
+  }
+}

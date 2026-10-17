@@ -1,0 +1,12 @@
+feature,bin_label,bin_order,users
+history_consumption_records,1,1,81626
+history_consumption_records,2,2,27531
+history_consumption_records,3-5,3,28922
+history_consumption_records,6-10,4,12270
+history_consumption_records,>10,5,6700
+recency_days,1-7,1,27336
+recency_days,15-35,3,35756
+recency_days,36-60,4,34545
+recency_days,61-90,5,20727
+recency_days,8-14,2,17013
+recency_days,91-121,6,21672

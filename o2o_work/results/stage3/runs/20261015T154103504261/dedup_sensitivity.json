@@ -1,0 +1,92 @@
+{
+  "rules_frozen": true,
+  "label_users_compared": 501041,
+  "segment_changes": 3743,
+  "dedup_evaluation": [
+    {
+      "segment_id": "high_receipt_zero_redemption",
+      "universe_users": 29643,
+      "evaluation_receipt_records": 9356,
+      "mature_receipt_records": 9356,
+      "redeemed15_records": 740,
+      "record_redemption_rate15": 0.07909362975630611,
+      "evaluation_receipt_users": 5841,
+      "mature_receipt_users": 5841,
+      "redeemed15_users": 556,
+      "redemption_user_share15": 0.09518917993494265,
+      "may_receipt_user_coverage": 0.1970448335188746,
+      "small_receipt_sample": false
+    },
+    {
+      "segment_id": "no_observed_consumption",
+      "universe_users": 254993,
+      "evaluation_receipt_records": 27851,
+      "mature_receipt_records": 27851,
+      "redeemed15_records": 1680,
+      "record_redemption_rate15": 0.06032099386018455,
+      "evaluation_receipt_users": 20535,
+      "mature_receipt_users": 20535,
+      "redeemed15_users": 1303,
+      "redemption_user_share15": 0.06345264183102022,
+      "may_receipt_user_coverage": 0.08053162243669434,
+      "small_receipt_sample": false
+    },
+    {
+      "segment_id": "not_recent_consumption",
+      "universe_users": 72667,
+      "evaluation_receipt_records": 30748,
+      "mature_receipt_records": 30748,
+      "redeemed15_records": 2533,
+      "record_redemption_rate15": 0.08237934174580461,
+      "evaluation_receipt_users": 21845,
+      "mature_receipt_users": 21845,
+      "redeemed15_users": 1999,
+      "redemption_user_share15": 0.09150835431448844,
+      "may_receipt_user_coverage": 0.3006178870739125,
+      "small_receipt_sample": false
+    },
+    {
+      "segment_id": "recent_high_frequency",
+      "universe_users": 35056,
+      "evaluation_receipt_records": 38158,
+      "mature_receipt_records": 38158,
+      "redeemed15_records": 7857,
+      "record_redemption_rate15": 0.20590701818753604,
+      "evaluation_receipt_users": 17372,
+      "mature_receipt_users": 17372,
+      "redeemed15_users": 4415,
+      "redemption_user_share15": 0.2541446005065623,
+      "may_receipt_user_coverage": 0.49554997717937016,
+      "small_receipt_sample": false
+    },
+    {
+      "segment_id": "recent_low_frequency",
+      "universe_users": 40754,
+      "evaluation_receipt_records": 24250,
+      "mature_receipt_records": 24250,
+      "redeemed15_records": 2598,
+      "record_redemption_rate15": 0.1071340206185567,
+      "evaluation_receipt_users": 14918,
+      "mature_receipt_users": 14918,
+      "redeemed15_users": 1927,
+      "redemption_user_share15": 0.1291728113688162,
+      "may_receipt_user_coverage": 0.3660499582863032,
+      "small_receipt_sample": false
+    },
+    {
+      "segment_id": "unknown_history",
+      "universe_users": 67928,
+      "evaluation_receipt_records": 83688,
+      "mature_receipt_records": 83688,
+      "redeemed15_records": 6008,
+      "record_redemption_rate15": 0.0717904598030781,
+      "evaluation_receipt_users": 67928,
+      "mature_receipt_users": 67928,
+      "redeemed15_users": 4660,
+      "redemption_user_share15": 0.06860204922859499,
+      "may_receipt_user_coverage": 1.0,
+      "small_receipt_sample": false
+    }
+  ],
+  "main_duplicates_retained": true
+}

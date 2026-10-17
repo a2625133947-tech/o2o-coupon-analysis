@@ -1,0 +1,6 @@
+feature,population,users,minimum,q25,q50,q75,q90,maximum
+history_active_days,TRUE,433113,1.0,1.0,1.0,2.0,4.0,102.0
+history_consumption_records,history_consumption_records>0,157049,1.0,1.0,1.0,3.0,6.0,150.0
+history_mature_receipt_records,history_mature_receipt_records>0,347147,1.0,1.0,1.0,2.0,4.0,89.0
+history_redemption_rate15,history_mature_receipt_records>0,347147,0.0,0.0,0.0,0.0,0.0,1.0
+recency_days,history_consumption_records>0,157049,1.0,12.0,35.0,64.0,96.0,121.0

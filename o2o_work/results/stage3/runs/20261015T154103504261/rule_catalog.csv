@@ -1,0 +1,7 @@
+priority,segment_id,segment_name,condition
+1,unknown_history,未知历史,NOT has_observed_history
+2,high_receipt_zero_redemption,历史多领券零核销,history_mature_receipt_records>=4 AND history_redeemed15_records=0
+3,no_observed_consumption,有历史但无已观察消费,history_consumption_records=0
+4,recent_high_frequency,近期高频消费,recency_days<=35 AND history_consumption_records>=3
+5,recent_low_frequency,近期低频消费,recency_days<=35
+6,not_recent_consumption,非近期消费,remaining history-consumption users

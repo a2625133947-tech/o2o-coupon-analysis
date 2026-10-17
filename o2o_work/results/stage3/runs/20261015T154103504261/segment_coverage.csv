@@ -1,0 +1,7 @@
+segment_id,universe_users,historical_users,history_consumption_records,history_receipt_records,history_mature_receipt_records,history_redeemed15_records,historical_record_redemption_rate15,median_recency_days,median_consumption_records
+high_receipt_zero_redemption,33053,33053,41182,191032,187248,0,0.0,35.0,0.0
+no_observed_consumption,253448,253448,0,339324,297066,0,0.0,,0.0
+not_recent_consumption,71876,71876,112677,98747,89297,10297,0.11531182458537241,65.0,1.0
+recent_high_frequency,34588,34588,246033,77408,65614,18759,0.2858993507483159,10.0,5.0
+recent_low_frequency,40148,40148,54279,40458,28528,3416,0.11974200785193494,15.0,1.0
+unknown_history,67928,0,0,0,0,0,,,0.0

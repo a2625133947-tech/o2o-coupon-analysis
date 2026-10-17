@@ -1,0 +1,313 @@
+{
+  "run_id": "20261015T154103504261",
+  "source_stage1_run": "20261015T154031143321",
+  "input": {
+    "path": "o2o/ccf_offline_stage1_train.csv",
+    "bytes": 71647992,
+    "sha256": "85ed49fd9873abebaef01a608defed667a3a2325e5c967fa25f4e9dc4b83f986",
+    "profile_key": "offline",
+    "rows": 1754884,
+    "columns": [
+      "User_id",
+      "Merchant_id",
+      "Coupon_id",
+      "Discount_rate",
+      "Distance",
+      "Date_received",
+      "Date"
+    ],
+    "role": "核心分析",
+    "has_header": true
+  },
+  "source_database_sha256": "e6f88662cac93da4d67b74b1585d3fc93565e7ac55d9d07570454404e92c7cc1",
+  "config": {
+    "version": "2026-10-14",
+    "history_start": "2016-01-01",
+    "segmentation_asof": "2016-05-01",
+    "history_end_exclusive": "2016-05-01",
+    "evaluation_receipt_start": "2016-05-01",
+    "evaluation_receipt_end_inclusive": "2016-05-31",
+    "evaluation_observation_end": "2016-06-15",
+    "training_observation_end": "2016-06-30",
+    "redemption_days_inclusive": [
+      0,
+      15
+    ],
+    "duplicates": "retain_source_records",
+    "ids": "VARCHAR",
+    "distance": "raw_code_with_unknown",
+    "sample_rows": 10000,
+    "offline_baseline": {
+      "rows": 1754884,
+      "states": {
+        "receipt_records": 1053282,
+        "receipt_with_consumption": 75382,
+        "redeemed_within15": 64395,
+        "receipt_without_consumption": 977900,
+        "consumption_without_receipt": 701602,
+        "neither_date": 0,
+        "negative_lag": 0,
+        "coupon_receipt_mismatch": 0,
+        "lag_over15": 10987
+      },
+      "mature15": {
+        "receipts": 1053282,
+        "redeemed15": 64395,
+        "immature_receipts": 0
+      },
+      "all_receipt_redeem15_rate": 0.06113747315533732,
+      "exact_duplicate_excess": 37893,
+      "dedup_sensitivity": {
+        "rows": 1716991,
+        "receipts": 1015389,
+        "redeemed15": 62153,
+        "mature_receipts": 1015389,
+        "mature_redeemed15": 62153
+      }
+    }
+  },
+  "rules": {
+    "asof_date": "2016-05-01",
+    "recent_days_max": 35,
+    "high_consumption_min": 3,
+    "high_receipt_min": 4,
+    "historical_redemption_condition": "history_redeemed15_records=0",
+    "priority": [
+      "unknown_history",
+      "high_receipt_zero_redemption",
+      "no_observed_consumption",
+      "recent_high_frequency",
+      "recent_low_frequency",
+      "not_recent_consumption"
+    ],
+    "names": {
+      "unknown_history": "未知历史",
+      "high_receipt_zero_redemption": "历史多领券零核销",
+      "no_observed_consumption": "有历史但无已观察消费",
+      "recent_high_frequency": "近期高频消费",
+      "recent_low_frequency": "近期低频消费",
+      "not_recent_consumption": "非近期消费"
+    },
+    "derivation": {
+      "recent_days_max": "ceil(有历史消费用户recency_days的中位数)",
+      "high_consumption_min": "max(2, ceil(有历史消费用户消费记录频次Q75))",
+      "high_receipt_min": "max(2, ceil(有成熟领券用户成熟历史领券频次Q90))",
+      "zero_redemption": "历史成熟领券群体核销率Q90为0，因此采用零核销的可解释条件，不任意设置低率分数"
+    },
+    "distribution": {
+      "recency_days": {
+        "feature": "recency_days",
+        "population": "history_consumption_records>0",
+        "users": 157049,
+        "minimum": 1.0,
+        "q25": 12.0,
+        "q50": 35.0,
+        "q75": 64.0,
+        "q90": 96.0,
+        "maximum": 121.0
+      },
+      "history_consumption_records": {
+        "feature": "history_consumption_records",
+        "population": "history_consumption_records>0",
+        "users": 157049,
+        "minimum": 1.0,
+        "q25": 1.0,
+        "q50": 1.0,
+        "q75": 3.0,
+        "q90": 6.0,
+        "maximum": 150.0
+      },
+      "history_mature_receipt_records": {
+        "feature": "history_mature_receipt_records",
+        "population": "history_mature_receipt_records>0",
+        "users": 347147,
+        "minimum": 1.0,
+        "q25": 1.0,
+        "q50": 1.0,
+        "q75": 2.0,
+        "q90": 4.0,
+        "maximum": 89.0
+      },
+      "history_redemption_rate15": {
+        "feature": "history_redemption_rate15",
+        "population": "history_mature_receipt_records>0",
+        "users": 347147,
+        "minimum": 0.0,
+        "q25": 0.0,
+        "q50": 0.0,
+        "q75": 0.0,
+        "q90": 0.0,
+        "maximum": 1.0
+      },
+      "history_active_days": {
+        "feature": "history_active_days",
+        "population": "TRUE",
+        "users": 433113,
+        "minimum": 1.0,
+        "q25": 1.0,
+        "q50": 1.0,
+        "q75": 2.0,
+        "q90": 4.0,
+        "maximum": 102.0
+      }
+    },
+    "rule_selection_uses_may_outcomes": false,
+    "unknown_universe": "历史用户与5月评价用户的并集仅用于回溯评价；未知用户并非已知的5月1日平台名单"
+  },
+  "bootstrap_method": {
+    "replicates": 2000,
+    "seed": 20261014,
+    "numpy_version": "2.4.6",
+    "rng_algorithm": "PCG64",
+    "unit": "user; multinomial over exact (receipt count, redemption count) classes is equivalent to resampling individual users",
+    "interval": "95% percentile bootstrap, conditional on observed May receipt users; users assumed independent; not causal or multiplicity adjusted"
+  },
+  "script_hashes": {
+    "stage3.py": "202ae4cc13e2335a80c42817433c8ec6609833ecb2325ed43efe343533b50521",
+    "stage3_report.py": "763944f39e8e1dd2048794de66459d1075f79112806f02ef3affb7e8e501d901",
+    "stage3_notebook.py": "094b1fd60281ab8d94dd359caaa11a831e8c070e2e54fce26811bc844ce3a211",
+    "verification.py": "8755a9cf1854b81a47985c7a8f9f7418bde9e0d7e022543465d400781d66b7a0"
+  },
+  "sql_hashes": {
+    "08_user_features_asof.sql": "3c92f63091c23f8d82bad3a4f160aad3614bf5d876e44a6101d9e87bc60238f7",
+    "09_user_segments.sql": "32e50137e0288bc0dd66470aa9d0ac1e46d595bae14f32f04c78d24aa50c2531",
+    "10_user_segment_evaluation.sql": "fa3e549f07c571b285d4c0f25c2e7148ba05b2900798fdda94c0e1f858e2ccad"
+  },
+  "files": {
+    "segment_coverage": {
+      "rows": 6,
+      "sha256": "04e2f26cb1b76bab8a27ee37ae5ded700c31b44df72f670e1c940f9d433b120a"
+    },
+    "segment_evaluation": {
+      "rows": 6,
+      "sha256": "832416579ea7e1c751eb652e8bcbb343795a4c957f2c0b84c940524e233148ab"
+    },
+    "segment_user_evaluation": {
+      "rows": 6,
+      "sha256": "101ac87bc54a8bd894d35e3f3a9bb28a38221af9f1742f6507dfd521cdba5dd6"
+    },
+    "segment_bootstrap_intervals": {
+      "rows": 18,
+      "sha256": "293fb89ecd5a364bf22cd3e94f0d3210c69dcf2f7beb112dae46d1e0453dd255"
+    },
+    "feature_distribution": {
+      "rows": 5,
+      "sha256": "f0da4d800075fd88fffc978ccbe50a507c2186f65c84bfaca0602d77f15525da"
+    },
+    "feature_bins": {
+      "rows": 11,
+      "sha256": "71d1f648bdc8b081401341bc1dd95cfc551827d6263d2d5ca572371e7f255fe3"
+    },
+    "segmentation_rules": {
+      "rows": 1,
+      "sha256": "0be7c195d173baa4deff4ad0322d8a308faf47cb32fa8acbab12efef6e797b4c"
+    },
+    "rule_catalog": {
+      "rows": 6,
+      "sha256": "dd343477d2300268ca5a8f3011deede7d19dd86dd5beaafbd7b41d088777075d"
+    }
+  },
+  "table_contracts": {
+    "user_features_asof": {
+      "grain": "user_id + asof_date; historical features plus unknown-history flag",
+      "time_contract": "history[2016-01-01,2016-05-01); historical receipts mature15 before asof; evaluation May with consumption observed through June15",
+      "duplicate_policy": "retain source records; separate fixed-rule exact-dedup sensitivity",
+      "rate_contract": "historical redeemed/mature receipts; subsequent record redeemed/mature receipts; user share redeeming users/receipt users; user-mean=sum(personal y/n)/evaluation_users; zero denominator NULL"
+    },
+    "user_segments": {
+      "grain": "user_id + asof_date; exactly one priority-rule segment",
+      "time_contract": "history[2016-01-01,2016-05-01); historical receipts mature15 before asof; evaluation May with consumption observed through June15",
+      "duplicate_policy": "retain source records; separate fixed-rule exact-dedup sensitivity",
+      "rate_contract": "historical redeemed/mature receipts; subsequent record redeemed/mature receipts; user share redeeming users/receipt users; user-mean=sum(personal y/n)/evaluation_users; zero denominator NULL"
+    },
+    "segment_coverage": {
+      "grain": "segment; entire retrospective universe including users with no May receipts",
+      "time_contract": "history[2016-01-01,2016-05-01); historical receipts mature15 before asof; evaluation May with consumption observed through June15",
+      "duplicate_policy": "retain source records; separate fixed-rule exact-dedup sensitivity",
+      "rate_contract": "historical redeemed/mature receipts; subsequent record redeemed/mature receipts; user share redeeming users/receipt users; user-mean=sum(personal y/n)/evaluation_users; zero denominator NULL"
+    },
+    "evaluation_receipts": {
+      "grain": "one original May receipt source record; record_id retained, duplicates not removed",
+      "time_contract": "history[2016-01-01,2016-05-01); historical receipts mature15 before asof; evaluation May with consumption observed through June15",
+      "duplicate_policy": "retain source records; separate fixed-rule exact-dedup sensitivity",
+      "rate_contract": "historical redeemed/mature receipts; subsequent record redeemed/mature receipts; user share redeeming users/receipt users; user-mean=sum(personal y/n)/evaluation_users; zero denominator NULL"
+    },
+    "evaluation_user_outcomes": {
+      "grain": "user_id + asof_date; May receipt count, redeemed count and at-least-one indicator",
+      "time_contract": "history[2016-01-01,2016-05-01); historical receipts mature15 before asof; evaluation May with consumption observed through June15",
+      "duplicate_policy": "retain source records; separate fixed-rule exact-dedup sensitivity",
+      "rate_contract": "historical redeemed/mature receipts; subsequent record redeemed/mature receipts; user share redeeming users/receipt users; user-mean=sum(personal y/n)/evaluation_users; zero denominator NULL"
+    },
+    "segment_evaluation": {
+      "grain": "segment; May record and distinct-user numerators/denominators",
+      "time_contract": "history[2016-01-01,2016-05-01); historical receipts mature15 before asof; evaluation May with consumption observed through June15",
+      "duplicate_policy": "retain source records; separate fixed-rule exact-dedup sensitivity",
+      "rate_contract": "historical redeemed/mature receipts; subsequent record redeemed/mature receipts; user share redeeming users/receipt users; user-mean=sum(personal y/n)/evaluation_users; zero denominator NULL"
+    },
+    "segment_user_evaluation": {
+      "grain": "segment; record weights, user redemption share and equal-user mean",
+      "time_contract": "history[2016-01-01,2016-05-01); historical receipts mature15 before asof; evaluation May with consumption observed through June15",
+      "duplicate_policy": "retain source records; separate fixed-rule exact-dedup sensitivity",
+      "rate_contract": "historical redeemed/mature receipts; subsequent record redeemed/mature receipts; user share redeeming users/receipt users; user-mean=sum(personal y/n)/evaluation_users; zero denominator NULL"
+    },
+    "segment_bootstrap_intervals": {
+      "grain": "segment + metric; user resampling percentile interval and observed numerator/denominator",
+      "time_contract": "history[2016-01-01,2016-05-01); historical receipts mature15 before asof; evaluation May with consumption observed through June15",
+      "duplicate_policy": "retain source records; separate fixed-rule exact-dedup sensitivity",
+      "rate_contract": "historical redeemed/mature receipts; subsequent record redeemed/mature receipts; user share redeeming users/receipt users; user-mean=sum(personal y/n)/evaluation_users; zero denominator NULL"
+    },
+    "feature_distribution": {
+      "grain": "historical feature; specified eligible population, quartiles and quantiles",
+      "time_contract": "history[2016-01-01,2016-05-01); historical receipts mature15 before asof; evaluation May with consumption observed through June15",
+      "duplicate_policy": "retain source records; separate fixed-rule exact-dedup sensitivity",
+      "rate_contract": "historical redeemed/mature receipts; subsequent record redeemed/mature receipts; user share redeeming users/receipt users; user-mean=sum(personal y/n)/evaluation_users; zero denominator NULL"
+    },
+    "feature_bins": {
+      "grain": "historical feature + ordered bin; observed-history consumers only",
+      "time_contract": "history[2016-01-01,2016-05-01); historical receipts mature15 before asof; evaluation May with consumption observed through June15",
+      "duplicate_policy": "retain source records; separate fixed-rule exact-dedup sensitivity",
+      "rate_contract": "historical redeemed/mature receipts; subsequent record redeemed/mature receipts; user share redeeming users/receipt users; user-mean=sum(personal y/n)/evaluation_users; zero denominator NULL"
+    },
+    "segmentation_rules": {
+      "grain": "one frozen threshold set",
+      "time_contract": "history[2016-01-01,2016-05-01); historical receipts mature15 before asof; evaluation May with consumption observed through June15",
+      "duplicate_policy": "retain source records; separate fixed-rule exact-dedup sensitivity",
+      "rate_contract": "historical redeemed/mature receipts; subsequent record redeemed/mature receipts; user share redeeming users/receipt users; user-mean=sum(personal y/n)/evaluation_users; zero denominator NULL"
+    },
+    "rule_catalog": {
+      "grain": "ordered priority per mutually exclusive group",
+      "time_contract": "history[2016-01-01,2016-05-01); historical receipts mature15 before asof; evaluation May with consumption observed through June15",
+      "duplicate_policy": "retain source records; separate fixed-rule exact-dedup sensitivity",
+      "rate_contract": "historical redeemed/mature receipts; subsequent record redeemed/mature receipts; user share redeeming users/receipt users; user-mean=sum(personal y/n)/evaluation_users; zero denominator NULL"
+    },
+    "user_case_features": {
+      "grain": "one anonymous example per segment",
+      "time_contract": "history[2016-01-01,2016-05-01); historical receipts mature15 before asof; evaluation May with consumption observed through June15",
+      "duplicate_policy": "retain source records; separate fixed-rule exact-dedup sensitivity",
+      "rate_contract": "historical redeemed/mature receipts; subsequent record redeemed/mature receipts; user share redeeming users/receipt users; user-mean=sum(personal y/n)/evaluation_users; zero denominator NULL"
+    },
+    "user_case_history_events": {
+      "grain": "example user + historical event type + record_id; never May outcomes",
+      "time_contract": "history[2016-01-01,2016-05-01); historical receipts mature15 before asof; evaluation May with consumption observed through June15",
+      "duplicate_policy": "retain source records; separate fixed-rule exact-dedup sensitivity",
+      "rate_contract": "historical redeemed/mature receipts; subsequent record redeemed/mature receipts; user share redeeming users/receipt users; user-mean=sum(personal y/n)/evaluation_users; zero denominator NULL"
+    }
+  },
+  "scope": "历史事件[2016-01-01,2016-05-01)，历史15日成熟领券最晚4月15日；5月领券评价，观察至6月15日；重复保留",
+  "universe": "历史用户与5月领券用户并集用于回溯评价；未知历史用户不是5月1日已知平台名单",
+  "rates": "每种记录率/用户占比保留分子分母；每用户平均率另列sum_within_user_redemption_rate15和evaluation_users",
+  "not_rfm": "无金额，仅RF及领券核销行为；未知历史不等于新用户",
+  "publication_export": {
+    "kind": "aggregate portfolio snapshot",
+    "excluded_record_and_user_details": [
+      "evaluation_receipts",
+      "evaluation_user_outcomes",
+      "user_case_features",
+      "user_case_history_events",
+      "user_features_asof",
+      "user_segments"
+    ],
+    "database_included": false,
+    "source": "local verified analysis; this export does not reproduce original acceptance receipts"
+  }
+}

@@ -1,0 +1,298 @@
+{
+  "offline": {
+    "rows": 1754884,
+    "columns": [
+      "User_id",
+      "Merchant_id",
+      "Coupon_id",
+      "Discount_rate",
+      "Distance",
+      "Date_received",
+      "Date"
+    ],
+    "types": {
+      "User_id": "string",
+      "Merchant_id": "string",
+      "Coupon_id": "string",
+      "Discount_rate": "string",
+      "Distance": "string",
+      "Date_received": "string",
+      "Date": "string"
+    },
+    "missing": {
+      "User_id": 0,
+      "Merchant_id": 0,
+      "Coupon_id": 701602,
+      "Discount_rate": 701602,
+      "Distance": 106003,
+      "Date_received": 701602,
+      "Date": 977900
+    },
+    "distinct": {
+      "User_id": 539438,
+      "Merchant_id": 8415,
+      "Coupon_id": 9738,
+      "Discount_rate": 45,
+      "Distance": 11,
+      "Date_received": 167,
+      "Date": 182
+    },
+    "exact_duplicate_excess": 37893,
+    "numeric": {},
+    "periods": {
+      "received": [
+        "2016-01-01",
+        "2016-06-15"
+      ],
+      "consumption": [
+        "2016-01-01",
+        "2016-06-30"
+      ]
+    },
+    "states": {
+      "receipt_records": 1053282,
+      "receipt_with_consumption": 75382,
+      "redeemed_within15": 64395,
+      "receipt_without_consumption": 977900,
+      "consumption_without_receipt": 701602,
+      "neither_date": 0,
+      "negative_lag": 0,
+      "coupon_receipt_mismatch": 0,
+      "lag_over15": 10987
+    },
+    "invalid_date_strings": {
+      "Date_received": 0,
+      "Date": 0
+    },
+    "coupon_composite_duplicate_excess": 41292,
+    "distance_counts": {
+      "0": 826070,
+      "1": 227221,
+      "10": 206484,
+      "2": 118413,
+      "<NA>": 106003,
+      "3": 76598,
+      "4": 55085,
+      "5": 41452,
+      "6": 32483,
+      "7": 25681,
+      "8": 21436,
+      "9": 17958
+    },
+    "discount_counts": {
+      "<NA>": 701602,
+      "30:5": 270712,
+      "100:10": 182554,
+      "200:20": 111046,
+      "20:5": 91013,
+      "20:1": 51705,
+      "50:5": 47379,
+      "100:30": 38196,
+      "200:30": 29327,
+      "300:30": 28979,
+      "50:10": 28452,
+      "10:5": 25925,
+      "0.95": 20568,
+      "10:1": 17842,
+      "30:1": 17654,
+      "150:20": 17437,
+      "100:20": 14297,
+      "30:10": 12692,
+      "50:20": 8203,
+      "0.9": 8085,
+      "200:50": 5585,
+      "150:10": 5325,
+      "100:5": 5053,
+      "0.8": 3441,
+      "50:1": 3354,
+      "5:1": 2526,
+      "100:50": 1774,
+      "150:30": 654,
+      "0.85": 649,
+      "200:10": 575,
+      "100:1": 537,
+      "20:10": 514,
+      "150:50": 306,
+      "300:50": 206,
+      "0.5": 186,
+      "0.75": 121,
+      "0.2": 110,
+      "0.6": 58,
+      "200:5": 57,
+      "300:20": 56,
+      "0.7": 54,
+      "30:20": 24,
+      "300:10": 23,
+      "200:100": 12,
+      "50:30": 9,
+      "150:5": 7
+    },
+    "receipt_cohorts": [
+      {
+        "month": "2016-01",
+        "receipt": 371539,
+        "redeemed15": 9849
+      },
+      {
+        "month": "2016-02",
+        "receipt": 133433,
+        "redeemed15": 5331
+      },
+      {
+        "month": "2016-03",
+        "receipt": 103903,
+        "redeemed15": 15291
+      },
+      {
+        "month": "2016-04",
+        "receipt": 138094,
+        "redeemed15": 5833
+      },
+      {
+        "month": "2016-05",
+        "receipt": 215348,
+        "redeemed15": 21580
+      },
+      {
+        "month": "2016-06",
+        "receipt": 90965,
+        "redeemed15": 6511
+      }
+    ],
+    "observed_cutoff": "2016-06-30",
+    "mature15": {
+      "receipts": 1053282,
+      "redeemed15": 64395,
+      "immature_receipts": 0
+    },
+    "all_receipt_redeem15_rate": 0.06113747315533732,
+    "mature_receipt_redeem15_rate": 0.06113747315533732,
+    "dedup_sensitivity": {
+      "rows": 1716991,
+      "receipts": 1015389,
+      "redeemed15": 62153,
+      "mature_receipts": 1015389,
+      "mature_redeemed15": 62153
+    }
+  },
+  "test": {
+    "rows": 113640,
+    "columns": [
+      "User_id",
+      "Merchant_id",
+      "Coupon_id",
+      "Discount_rate",
+      "Distance",
+      "Date_received"
+    ],
+    "types": {
+      "User_id": "string",
+      "Merchant_id": "string",
+      "Coupon_id": "string",
+      "Discount_rate": "string",
+      "Distance": "string",
+      "Date_received": "string"
+    },
+    "missing": {
+      "User_id": 0,
+      "Merchant_id": 0,
+      "Coupon_id": 0,
+      "Discount_rate": 0,
+      "Distance": 12064,
+      "Date_received": 0
+    },
+    "distinct": {
+      "User_id": 76309,
+      "Merchant_id": 1559,
+      "Coupon_id": 2050,
+      "Discount_rate": 42,
+      "Distance": 11,
+      "Date_received": 31
+    },
+    "exact_duplicate_excess": 837,
+    "numeric": {},
+    "period": [
+      "2016-07-01",
+      "2016-07-31"
+    ]
+  },
+  "online": {
+    "rows": 11429826,
+    "columns": [
+      "User_id",
+      "Merchant_id",
+      "Action",
+      "Coupon_id",
+      "Discount_rate",
+      "Date_received",
+      "Date"
+    ],
+    "missing": {
+      "User_id": 0,
+      "Merchant_id": 0,
+      "Action": 0,
+      "Coupon_id": 10557469,
+      "Discount_rate": 10557469,
+      "Date_received": 10557469,
+      "Date": 655898
+    },
+    "distinct": {
+      "User_id": 762858,
+      "Merchant_id": 7999,
+      "Action": 3,
+      "Coupon_id": 27747,
+      "Discount_rate": 64,
+      "Date_received": 167,
+      "Date": 182
+    },
+    "actions": {
+      "0": 9401780,
+      "1": 1372148,
+      "2": 655898
+    },
+    "periods": {
+      "Date_received": [
+        "2016-01-01",
+        "2016-06-15"
+      ],
+      "Date": [
+        "2016-01-01",
+        "2016-06-30"
+      ]
+    },
+    "duplicate_hash_excess": 5607283,
+    "states": {
+      "invalid_Date_received": 0,
+      "invalid_Date": 0,
+      "('0', False, False, True)": 9401780,
+      "('1', False, False, True)": 1155689,
+      "('1', True, True, True)": 216459,
+      "('2', True, True, False)": 655898
+    },
+    "cross_table_overlap": {
+      "users_in_both": 267448,
+      "offline_users": 539438,
+      "online_users": 762858,
+      "merchants_in_both": 0,
+      "coupons_in_both": 0
+    }
+  },
+  "files": {
+    "o2o/ccf_offline_stage1_test_revised.csv": {
+      "bytes": 4046198,
+      "sha256": "90bfc9e74bb8b6858b40ed947cb43c2ff7890414c4f8422d50fe96ab2fb464bd"
+    },
+    "o2o/ccf_offline_stage1_train.csv": {
+      "bytes": 71647992,
+      "sha256": "85ed49fd9873abebaef01a608defed667a3a2325e5c967fa25f4e9dc4b83f986"
+    },
+    "o2o/ccf_online_stage1_train.csv": {
+      "bytes": 482824573,
+      "sha256": "9f0ac5e978db842a45d1ee1836ff609bf83c9b500429993ee6731b2622c3be0e"
+    },
+    "o2o/sample_submission.csv": {
+      "bytes": 364,
+      "sha256": "35ed18999cb6b1af6132ca4acc3de7cd4d45b2a9aa0e69c8aeac716fd38cbf4b"
+    }
+  }
+}
